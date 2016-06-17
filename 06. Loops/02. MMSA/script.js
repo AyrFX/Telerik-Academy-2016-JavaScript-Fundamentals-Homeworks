@@ -5,12 +5,12 @@ function solve(args) {
 
     for (var i = 1; i < args.length; i++) {
         if (min > +args[i]) {
-            min = args[i];
+            min = +args[i];
         }
         if (max < +args[i]) {
-            max = args[i];
+            max = +args[i];
         }
-        sum += args[i];
+        sum += +args[i];
     }
     console.log('min=' + min.toFixed(2));
     console.log('max=' + max.toFixed(2));
