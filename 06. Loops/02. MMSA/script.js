@@ -1,7 +1,7 @@
 function solve(args) {
-    var min = args[0],
-        max = args[0],
-        sum = args[0];
+    var min = +args[0],
+        max = +args[0],
+        sum = +args[0];
 
     for (var i = 1; i < args.length; i++) {
         if (min > +args[i]) {
@@ -17,3 +17,6 @@ function solve(args) {
     console.log('sum=' + sum.toFixed(2));
     console.log('avg=' + (sum / args.length).toFixed(2));
 }
+
+solve([2, 5, 1]);
+solve([3, 2, -1, 4]);
