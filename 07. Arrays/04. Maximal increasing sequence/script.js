@@ -5,7 +5,7 @@ function solve(args) {
 
     for (var i = 0; i < array.length; i += 1) {
         for (var j = i + 1; j < array.length; j += 1) {
-            if (array[j] === array[j - 1] + 1) {
+            if (array[j] > array[j - 1]) {
                 currentLength += 1;
             } else {
                 if (maximalLength < currentLength) {
