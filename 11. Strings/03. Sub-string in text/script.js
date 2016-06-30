@@ -1,14 +1,16 @@
 function solve(args) {
-    let text = args[0],
-        reversedAsArray = [];
+    let substring = args[0],
+        text = args[1],
+        tempArray = [];
 
-    for (var i = text.length - 1; i >= 0; i -= 1) {
-        reversedAsArray.push(text[i]);
-    }
+    substring = substring.toUpperCase();
+    text = text.toUpperCase();
+    tempArray = text.split(substring);
 
-    console.log(reversedAsArray.join(''));
+    console.log(tempArray.length - 1);
 }
 
-solve(['sample']);
-
-solve(['qwertytrewq']);
+solve([
+    'in',
+    'We are living in an yellow submarine. We don\'t have anything else. inside the submarine is very tight. So we are drinking all the day. We will move out of it in 5 days.'
+]);
