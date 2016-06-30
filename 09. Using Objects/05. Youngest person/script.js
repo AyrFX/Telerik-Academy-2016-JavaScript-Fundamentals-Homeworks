@@ -27,7 +27,7 @@ function solve(args) {
     for (var i = 0; i < args.length - 2; i += 3) {
         var fName = args[i],
             lName = args[i + 1],
-            age = args[i + 2];
+            age = +args[i + 2];
         personstList.push(createPerson(fName, lName, age));
     }
 
