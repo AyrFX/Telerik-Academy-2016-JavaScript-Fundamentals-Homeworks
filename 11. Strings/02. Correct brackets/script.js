@@ -1,14 +1,27 @@
 function solve(args) {
     let text = args[0],
-        reversedAsArray = [];
+        openBrackets = 0,
+        closeBrackets = 0;
 
-    for (var i = text.length - 1; i >= 0; i -= 1) {
-        reversedAsArray.push(text[i]);
+    for (var i = 0; i < text.length; i++) {
+        if (text[i] === '(') {
+            openBrackets += 1;
+        } else if (text[i] === ')') {
+            closeBrackets += 1;
+        }
+
+        if (openBrackets < closeBrackets) {
+            console.log('Incorrect');
+            return;
+        }
     }
 
-    console.log(reversedAsArray.join(''));
+    if (openBrackets === closeBrackets) {
+        console.log("Correct");
+    } else {
+        console.log("Incorrect");
+    }
 }
 
-solve(['sample']);
-
-solve(['qwertytrewq']);
+solve(['((a+b)/5-d)']);
+solve([')(a+b))']);
