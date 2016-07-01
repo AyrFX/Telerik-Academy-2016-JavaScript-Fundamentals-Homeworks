@@ -4,12 +4,16 @@ function solve(args) {
         matches = text.match(/#{(.*?)}/g),
         currentProperty;
 
-    for (var i = 0; i < matches.length; i += 1) {
-        currentProperty = matches[i].match(/(\w+)/g)[0];
-        text = text.replace('#{' + currentProperty + '}', values[currentProperty]);
-    }
+    String.prototype.applyValues = function (matches) {
+        let result = this;
+        for (let i = 0; i < matches.length; i += 1) {
+            currentProperty = matches[i].match(/([^#|^{|^}]+)/g);
+            result = result.replace('#{' + currentProperty + '}', values[currentProperty]);
+        }
+        return result;
+    };
 
-    console.log(text);
+    console.log(text.applyValues(matches));
     //console.log(matches);
 }
 
