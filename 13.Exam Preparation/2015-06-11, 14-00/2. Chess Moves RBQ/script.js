@@ -4,7 +4,7 @@ function solve(params) {
         board = [],
         moves = [],
         tests = parseInt(params[rows + 2]),
-        i, j;
+        i, j, k;
 
     for (i = 2; i < rows + 2; i += 1) {
         board.push(params[i].split(''));
@@ -138,6 +138,86 @@ function solve(params) {
                 } else {
                     console.log(currentPiece);
                     console.log('yes');
+                }
+            }
+        }
+
+        if ((currentPiece === 'B' || currentPiece === 'Q') && IsDiagonalMove(moves[i])) {
+            var realStartIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[0])),
+                realEndIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[1]));
+
+            needToContinue = false;
+            if (realStartIndexes.row > realEndIndexes.row) {
+                if (realStartIndexes.col > realEndIndexes.col) {
+                    //startRow > endRow and startCol > endCol
+                    for (j = realStartIndexes.row - 1, k = realStartIndexes.col - 1; j >= realEndIndexes.row; j -= 1, k -=
+                        1) {
+                        if (board[j][k] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
+                } else {
+                    //startRow > endRow and startCol < endCol
+                    for (j = realStartIndexes.row - 1, k = realStartIndexes.col + 1; j >= realEndIndexes.row; j -= 1, k +=
+                        1) {
+                        if (board[j][k] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
+                }
+            } else {
+                if (realStartIndexes.col > realEndIndexes.col) {
+                    //startRow < endRow and startCol > endCol
+                    for (j = realStartIndexes.row + 1, k = realStartIndexes.col - 1; j <= realEndIndexes.row; j += 1, k -=
+                        1) {
+                        if (board[j][k] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
+                } else {
+                    //startRow < endRow and startCol < endCol
+                    for (j = realStartIndexes.row + 1, k = realStartIndexes.col + 1; j <= realEndIndexes.row; j += 1, k +=
+                        1) {
+                        if (board[j][k] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
                 }
             }
         }
