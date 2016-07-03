@@ -1,6 +1,6 @@
 function solve(params) {
     var rows = parseInt(params[0]),
-        cols = parseInt(params[1]),
+        //cols = parseInt(params[1]),
         board = [],
         moves = [],
         tests = parseInt(params[rows + 2]),
@@ -66,7 +66,6 @@ function solve(params) {
     }
 
     for (i = 0; i < moves.length; i += 1) {
-        console.log('test ' + i);
         var startMove = moves[i].split(' ')[0],
             startIndexes = GetMoveIndexes(startMove),
             currentPiece;
@@ -75,36 +74,31 @@ function solve(params) {
 
         //Check if the move is valid
         if (!IsStrightMove(moves[i]) && !IsDiagonalMove(moves[i])) {
-            console.log(currentPiece);
-            console.log('no; not valid move');
+            console.log('no');
             continue;
         }
 
         switch (currentPiece) {
         case 'R':
             if (!IsStrightMove(moves[i])) {
-                console.log(currentPiece);
-                console.log('no; not stright move');
+                console.log('no');
                 continue;
             }
             break;
         case 'B':
             if (!IsDiagonalMove(moves[i])) {
-                console.log(currentPiece);
-                console.log('no; not diagonal move');
+                console.log('no');
                 continue;
             }
             break;
         case 'Q':
             if (!IsStrightMove(moves[i]) && !IsDiagonalMove(moves[i])) {
-                console.log(currentPiece);
-                console.log('no; not stright or diagonal move');
+                console.log('no');
                 continue;
             }
             break;
         default: //if the square is empty
-            console.log(currentPiece);
-            console.log('no; no figure on the start position');
+            console.log('no');
             continue;
         }
 
@@ -122,8 +116,7 @@ function solve(params) {
                 if (realStartIndexes.col < realEndIndexes.col) {
                     for (j = realStartIndexes.col + 1; j <= realEndIndexes.col; j += 1) {
                         if (board[currentRow][j] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -131,14 +124,12 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 } else {
                     for (j = realStartIndexes.col - 1; j >= realEndIndexes.col; j -= 1) {
                         if (board[currentRow][j] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -146,7 +137,6 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 }
@@ -157,8 +147,7 @@ function solve(params) {
                 if (realStartIndexes.row < realEndIndexes.row) {
                     for (j = realStartIndexes.row + 1; j <= realEndIndexes.row; j += 1) {
                         if (board[j][currentCol] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -166,14 +155,12 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 } else {
                     for (j = realStartIndexes.row - 1; j >= realEndIndexes.row; j -= 1) {
                         if (board[j][currentCol] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -181,7 +168,6 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 }
@@ -199,8 +185,7 @@ function solve(params) {
                     for (j = realStartIndexes.row - 1, k = realStartIndexes.col - 1; j >= realEndIndexes.row; j -= 1, k -=
                         1) {
                         if (board[j][k] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -208,7 +193,6 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 } else {
@@ -216,8 +200,7 @@ function solve(params) {
                     for (j = realStartIndexes.row - 1, k = realStartIndexes.col + 1; j >= realEndIndexes.row; j -= 1, k +=
                         1) {
                         if (board[j][k] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -225,7 +208,6 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 }
@@ -235,8 +217,7 @@ function solve(params) {
                     for (j = realStartIndexes.row + 1, k = realStartIndexes.col - 1; j <= realEndIndexes.row; j += 1, k -=
                         1) {
                         if (board[j][k] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -244,7 +225,6 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 } else {
@@ -252,8 +232,7 @@ function solve(params) {
                     for (j = realStartIndexes.row + 1, k = realStartIndexes.col + 1; j <= realEndIndexes.row; j += 1, k +=
                         1) {
                         if (board[j][k] !== '-') {
-                            console.log(currentPiece);
-                            console.log('no; there is figure on the way');
+                            console.log('no');
                             needToContinue = true;
                             break;
                         }
@@ -261,26 +240,15 @@ function solve(params) {
                     if (needToContinue) {
                         continue;
                     } else {
-                        console.log(currentPiece);
                         console.log('yes');
                     }
                 }
             }
         }
-
-        /*console.log(currentPiece);
-        console.log('yes');*/
     }
-
-    console.log(`rows: ${rows}`);
-    console.log(`cols: ${cols}`);
-    console.log(`board: ${board}`);
-    console.log(`moves: ${moves}`);
-    console.log(`tests: ${tests}`);
-    console.log(`move1: ${GetMoveIndexes(moves[0].split(' ')[0]).col}`);
 }
 
-/*solve(['3',
+solve(['3',
     '4',
     '--R-',
     'B--B',
@@ -298,7 +266,7 @@ function solve(params) {
     'c3 b1',
     'a2 a3',
     'd1 d3'
-]);*/
+]);
 
 solve(['5',
     '5',
