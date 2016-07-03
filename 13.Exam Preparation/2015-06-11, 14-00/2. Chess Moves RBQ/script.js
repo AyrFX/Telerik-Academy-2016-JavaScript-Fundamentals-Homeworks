@@ -4,7 +4,9 @@ function solve(params) {
         board = [],
         moves = [],
         tests = parseInt(params[rows + 2]),
-        i, j, k;
+        i, j, k,
+        realStartIndexes,
+        realEndIndexes;
 
     for (i = 2; i < rows + 2; i += 1) {
         board.push(params[i].split(''));
@@ -26,6 +28,11 @@ function solve(params) {
         var startPosition = move.split(' ')[0],
             endPosition = move.split(' ')[1];
 
+        if (GetMoveIndexes(startPosition).row === GetMoveIndexes(endPosition).row &&
+            GetMoveIndexes(startPosition).col === GetMoveIndexes(endPosition).col) {
+            return false;
+        }
+
         if (GetMoveIndexes(startPosition).row === GetMoveIndexes(endPosition).row ||
             GetMoveIndexes(startPosition).col === GetMoveIndexes(endPosition).col) {
             return true;
@@ -37,6 +44,11 @@ function solve(params) {
     function IsDiagonalMove(move) {
         var startPosition = move.split(' ')[0],
             endPosition = move.split(' ')[1];
+
+        if (GetMoveIndexes(startPosition).row === GetMoveIndexes(endPosition).row &&
+            GetMoveIndexes(startPosition).col === GetMoveIndexes(endPosition).col) {
+            return false;
+        }
 
         if (Math.abs(GetMoveIndexes(startPosition).row - GetMoveIndexes(endPosition).row) ===
             Math.abs(GetMoveIndexes(startPosition).col - GetMoveIndexes(endPosition).col)) {
@@ -56,9 +68,7 @@ function solve(params) {
     for (i = 0; i < moves.length; i += 1) {
         console.log('test ' + i);
         var startMove = moves[i].split(' ')[0],
-            endMove = moves[i].split(' ')[1],
             startIndexes = GetMoveIndexes(startMove),
-            endIndexes = GetMoveIndexes(endMove),
             currentPiece;
 
         currentPiece = board[ToRealIndexes(startIndexes).row][ToRealIndexes(startIndexes).col];
@@ -101,50 +111,86 @@ function solve(params) {
         //Checks for the concrete moves if they are valid
         if ((currentPiece === 'R' || currentPiece === 'Q') && IsStrightMove(moves[i])) {
             var needToContinue = false;
-            if (startIndexes.row === endIndexes.row) {
-                var currentRow = startIndexes.row;
+
+            realStartIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[0]));
+            realEndIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[1]));
+
+            if (realStartIndexes.row === realEndIndexes.row) {
+                var currentRow = realStartIndexes.row;
 
                 needToContinue = false;
-                for (j = Math.min(startIndexes.col, endIndexes.col) + 1; j <= Math.max(startIndexes.col, endIndexes.col); j +=
-                    1) {
-                    if (board[currentRow][j] !== '-') {
+                if (realStartIndexes.col < realEndIndexes.col) {
+                    for (j = realStartIndexes.col + 1; j <= realEndIndexes.col; j += 1) {
+                        if (board[currentRow][j] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
                         console.log(currentPiece);
-                        console.log('no; there is figure on the way');
-                        needToContinue = true;
-                        break;
+                        console.log('yes');
+                    }
+                } else {
+                    for (j = realStartIndexes.col - 1; j >= realEndIndexes.col; j -= 1) {
+                        if (board[currentRow][j] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
                     }
                 }
-                if (needToContinue) {
-                    continue;
-                } else {
-                    console.log(currentPiece);
-                    console.log('yes');
-                }
-            } else if (startIndexes.col === endIndexes.col) {
-                var currentCol = startIndexes.col;
+            } else if (realStartIndexes.col === realEndIndexes.col) {
+                var currentCol = realStartIndexes.col;
 
                 needToContinue = false;
-                for (j = Math.min(startIndexes.row, endIndexes.row) + 1; j <= Math.max(startIndexes.row, endIndexes.row); j +=
-                    1) {
-                    if (board[j][currentCol] !== '-') {
-                        console.log(currentPiece);
-                        console.log('no; there is figure on the way');
-                        needToContinue = true;
-                        break;
+                if (realStartIndexes.row < realEndIndexes.row) {
+                    for (j = realStartIndexes.row + 1; j <= realEndIndexes.row; j += 1) {
+                        if (board[j][currentCol] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
                     }
-                }
-                if (needToContinue) {
-                    continue;
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
                 } else {
-                    console.log(currentPiece);
-                    console.log('yes');
+                    for (j = realStartIndexes.row - 1; j >= realEndIndexes.row; j -= 1) {
+                        if (board[j][currentCol] !== '-') {
+                            console.log(currentPiece);
+                            console.log('no; there is figure on the way');
+                            needToContinue = true;
+                            break;
+                        }
+                    }
+                    if (needToContinue) {
+                        continue;
+                    } else {
+                        console.log(currentPiece);
+                        console.log('yes');
+                    }
                 }
             }
         }
 
         if ((currentPiece === 'B' || currentPiece === 'Q') && IsDiagonalMove(moves[i])) {
-            var realStartIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[0])),
-                realEndIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[1]));
+            realStartIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[0]));
+            realEndIndexes = ToRealIndexes(GetMoveIndexes(moves[i].split(' ')[1]));
 
             needToContinue = false;
             if (realStartIndexes.row > realEndIndexes.row) {
@@ -232,10 +278,9 @@ function solve(params) {
     console.log(`moves: ${moves}`);
     console.log(`tests: ${tests}`);
     console.log(`move1: ${GetMoveIndexes(moves[0].split(' ')[0]).col}`);
-    console.log('yes'); // or console.log('no');
 }
 
-solve(['3',
+/*solve(['3',
     '4',
     '--R-',
     'B--B',
@@ -253,4 +298,24 @@ solve(['3',
     'c3 b1',
     'a2 a3',
     'd1 d3'
+]);*/
+
+solve(['5',
+    '5',
+    'Q---Q',
+    '-----',
+    '-B---',
+    '--R--',
+    'Q---Q',
+    '10',
+    'a1 a1',
+    'a1 d4',
+    'e1 b4',
+    'a5 d2',
+    'e5 b2',
+    'b3 d5',
+    'b3 a2',
+    'b3 d1',
+    'b3 a4',
+    'c2 c5'
 ]);
