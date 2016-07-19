@@ -18,9 +18,17 @@ function solve(args) {
                     secondProperties = '',
                     newResult = '';
 
-                for (k = 0; k <= result.length; k += 1) {
-                    if (k < secondSelectorStart + 1 || k > secondSelectorEnd) {
+                for (k = 0; k < result.length; k += 1) {
+                    if (k <= secondSelectorStart || k > secondSelectorEnd) {
                         newResult += result[k];
+                    }
+                }
+
+                secondSelectorStart += selectors[i].length;
+                secondSelectorEnd -= 1;
+                for (k = 0; k < result.length; k += 1) {
+                    if (k < secondSelectorStart || k > secondSelectorEnd) {
+                        //newResult += result[k];
                     } else {
                         secondProperties += result[k];
                     }
@@ -30,17 +38,17 @@ function solve(args) {
                 firstSelectorEnd -= 1;
                 result = '';
                 for (k = 0; k <= newResult.length; k += 1) {
-                    if (k === firstSelectorEnd - 1) {
-                        result += secondProperties + result[k];
+                    if (k === firstSelectorEnd + 1) {
+                        result += ';' + secondProperties + newResult[k];
                     } else {
-                        result += newResult[k];
+                        result += newResult[k] || '';
                     }
                 }
 
-                console.log(firstSelectorStart);
+                /*console.log(firstSelectorStart);
                 console.log(firstSelectorEnd);
                 console.log(secondSelectorStart);
-                console.log(secondSelectorEnd);
+                console.log(secondSelectorEnd);*/
 
             }
         }
